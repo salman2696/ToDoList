@@ -2,9 +2,7 @@ var btnClick = document.getElementById("button-addon2");
 var list = document.getElementById("todo-list");
 var input = document.getElementById("text");
 
-btnClick.addEventListener("click", function () {
-  addListItem();
-});
+btnClick.addEventListener("click",  addListItem)
 
 document.body.addEventListener("keydown", function (e) {
   var keyCode = e.keyCode;
