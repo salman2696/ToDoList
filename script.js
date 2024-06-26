@@ -22,7 +22,6 @@ function addListItem() {
     newElement.appendChild(newList);
     newElement.classList = "list-item"
     list.appendChild(newElement);
-    console.log(list.childElementCount)
     input.value = "";
   }
 }
