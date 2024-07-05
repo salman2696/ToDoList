@@ -15,9 +15,10 @@ body{
     border: 2px solid #717377;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0px 3px 15px #717377;
     backdrop-filter: blur(10px);
+    box-shadow: 3px 0px 15px #717377;
 }
+
 
 .input-field {
     padding: 10px 15px;
