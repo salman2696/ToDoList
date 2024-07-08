@@ -10,22 +10,34 @@ body{
     height: 100vh;
 }
 
-.container {
-    text-align: center;
-    border: 2px solid #717377;
-    padding: 10px;
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
-    box-shadow: 3px 0px 15px #717377;
+h2{
+    color: white;
+    text-decoration: underline;
 }
 
 
+.container {
+    text-align: center;
+    border: 1px solid #717377;
+    padding: 10px;
+    border-radius: 10px;
+    backdrop-filter: blur(7px);
+    box-shadow: 3px 0px 18px #717377;
+    width: 400px;
+    margin: 20px 20px;
+}
+
+.input-group{
+    display: flex;
+    flex-direction: column;
+}
+
 .input-field {
     padding: 10px 15px;
-    width: 300px;
+    margin-bottom: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 20px;
     transition: all 0.3s ease;
     outline: none;
     background: transparent;
@@ -70,7 +82,6 @@ padding: 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 150px;
     color: #f0f0f5;
     margin-bottom: 15px;
 }
