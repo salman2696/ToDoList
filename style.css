@@ -1,6 +1,6 @@
 body{
     font-family: Arial, sans-serif;
-    background-image: url(https://img.freepik.com/free-photo/abstract-digital-grid-black-background_53876-97647.jpg);
+    background-image: url(https://images.pexels.com/photos/2736499/pexels-photo-2736499.jpeg?cs=srgb&dl=pexels-content-pixie-1405717-2736499.jpg&fm=jpg);
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -11,19 +11,18 @@ body{
 }
 
 h2{
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: underline;
 }
 
 
 .container {
     text-align: center;
-    border: 1px solid #717377;
     padding: 10px;
     border-radius: 10px;
-    backdrop-filter: blur(7px);
+    backdrop-filter: blur(3px);
     box-shadow: 3px 0px 18px #717377;
-    width: 400px;
+    min-width: 400px;
     margin: 20px 20px;
 }
 
@@ -36,12 +35,12 @@ h2{
     padding: 10px 15px;
     margin-bottom: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 1px solid #414141;
     border-radius: 20px;
     transition: all 0.3s ease;
     outline: none;
     background: transparent;
-    color: #f0f0f5;
+    color: #000000;
 }
 
 .input-field:focus {
@@ -54,7 +53,7 @@ h2{
     margin-top: 10px;
     font-size: 16px;
     color: #fff;
-    background-color: #6c63ff;
+    background-color: #00bd68;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -62,27 +61,27 @@ h2{
 }
 
 .button:hover {
-    background-color: #574bdb;
+    background-color: #009e57;
 }
 
 .button:active {
-    background-color: #4639c4;
+    background-color: #008d4e;
 }
 
 .list-container{
-width: 100%;
+min-width: 100%;
 padding: 0px;
 }
 
 .list-item {
     padding: 15px 20px;
     font-size: 16px;
-    border: 1px solid #eee;
+    border: 1px solid #1f1f1f;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #f0f0f5;
+    color: #000000;
     margin-bottom: 15px;
 }
 
@@ -92,5 +91,19 @@ padding: 0px;
 
 .completed {
     text-decoration: line-through;
-    color: #999;
+    color: #7e7e7e;
+}
+
+.icon-container{
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 5px;
+    width: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-container i {
+    margin: 2px 5px;
 }
