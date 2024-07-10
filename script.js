@@ -1,4 +1,3 @@
-
 var btnClick = document.getElementById("button-addon2");
 var list = document.getElementById("todo-list");
 var input = document.getElementById("text");
@@ -6,20 +5,22 @@ var date = document.getElementById('date');
 var searchInput = document.getElementById("search");
 
 // Set default date to today
-function defaultDate() {
+function setDefaultDate() {
   var today = new Date().toISOString().split('T')[0];
   date.value = today;
+}
+
+window.onload = function() {
+  setDefaultDate();
+  loadListItems();
 };
 
-window.onload = defaultDate;
 btnClick.addEventListener("click", addListItem);
-btnClick.addEventListener("click", defaultDate);
 
 document.body.addEventListener("keydown", function (e) {
   var keyCode = e.keyCode;
   if (keyCode === 13) {
     addListItem();
-    defaultDate();
   }
 });
 
@@ -27,51 +28,54 @@ searchInput.addEventListener("input", filterListItems);
 
 function addListItem() {
   const newElement = document.createElement("li");
-  const newItem = document.createElement("p");
   const newDate = document.createElement("p");
   const newIcon = document.createElement("i");
   const newCheckMark = document.createElement("i");
-  const newList = document.createTextNode((list.childElementCount + 1) + '. ');
+  const newList = document.createElement("p");
+  const textValue = input.value.trim();
 
-  if (input.value.trim() === "" || date.value.trim() === "") {
+  if (textValue === "" || date.value.trim() === "") {
     alert("Enter valid List & Date");
     return;
   }
 
+  newCheckMark.classList = "fa-solid fa-check";
+  newCheckMark.addEventListener("click", () => {
+    newElement.classList.toggle("completed");
+    saveListItems();
+  });
+
+  newList.textContent = textValue;
   newElement.appendChild(newCheckMark);
   newElement.appendChild(newList);
-  newElement.appendChild(newItem);
+
   newDate.textContent = date.value;
-  newItem.textContent = input.value;
   newElement.classList = "list-item";
   newElement.setAttribute('draggable', true);
   newElement.addEventListener('dragstart', dragStart);
   newElement.addEventListener('dragover', dragOver);
   newElement.addEventListener('drop', drop);
 
-  newCheckMark.classList = "fa-solid fa-check";
-  newCheckMark.addEventListener("click", () => {
-    newElement.classList.toggle("completed");
-  });
-
   newIcon.classList = "fa-solid fa-trash";
   newIcon.addEventListener("click", () => {
     list.removeChild(newElement);
-    filterListItems(); // Update filter after removing an item
+    saveListItems();
   });
 
   newElement.appendChild(newDate);
   newElement.appendChild(newIcon);
   list.appendChild(newElement);
   input.value = "";
-  date.value = "";
+  setDefaultDate(); // Reset the date to today
+
+  saveListItems();
 }
 
 function filterListItems() {
   const filter = searchInput.value.toLowerCase();
   const items = list.getElementsByTagName('li');
   Array.from(items).forEach(item => {
-    const text = item.childNodes[1].textContent.toLowerCase(); // Adjusted index to access the correct text node
+    const text = item.querySelector('p').textContent.toLowerCase();
     if (text.indexOf(filter) > -1) {
       item.style.display = "";
     } else {
@@ -110,6 +114,7 @@ function drop(e) {
     reattachEventListeners(this);
   }
 
+  saveListItems();
   return false;
 }
 
@@ -119,15 +124,73 @@ function reattachEventListeners(element) {
 
   newIcon.addEventListener("click", () => {
     list.removeChild(element);
-    filterListItems(); // Update filter after removing an item
+    saveListItems();
   });
 
   newCheckMark.addEventListener("click", () => {
     element.classList.toggle("completed");
+    saveListItems();
   });
 
   element.setAttribute('draggable', true);
   element.addEventListener('dragstart', dragStart);
   element.addEventListener('dragover', dragOver);
   element.addEventListener('drop', drop);
+}
+
+function saveListItems() {
+  const items = [];
+  list.querySelectorAll('li').forEach(item => {
+    const checkMarkClass = item.classList.contains('completed');
+    const textElement = item.querySelector('p:nth-child(2)');
+    const dateElement = item.querySelector('p:nth-child(3)');
+    if (textElement && dateElement) {
+      const text = textElement.textContent;
+      const date = dateElement.textContent;
+      items.push({ checkMarkClass, text, date });
+    }
+  });
+  localStorage.setItem('todoList', JSON.stringify(items));
+}
+
+function loadListItems() {
+  const items = JSON.parse(localStorage.getItem('todoList')) || [];
+  items.forEach(item => {
+    const newElement = document.createElement("li");
+    const newDate = document.createElement("p");
+    const newIcon = document.createElement("i");
+    const newCheckMark = document.createElement("i");
+    const newList = document.createElement("p");
+
+    newCheckMark.classList = "fa-solid fa-check";
+    newCheckMark.addEventListener("click", () => {
+      newElement.classList.toggle("completed");
+      saveListItems();
+    });
+
+    newList.textContent = item.text;
+    newElement.appendChild(newCheckMark);
+    newElement.appendChild(newList);
+
+    newDate.textContent = item.date;
+    newElement.classList = "list-item";
+    newElement.setAttribute('draggable', true);
+    newElement.addEventListener('dragstart', dragStart);
+    newElement.addEventListener('dragover', dragOver);
+    newElement.addEventListener('drop', drop);
+
+    if (item.checkMarkClass) {
+      newElement.classList.add('completed');
+    }
+
+    newIcon.classList = "fa-solid fa-trash";
+    newIcon.addEventListener("click", () => {
+      list.removeChild(newElement);
+      saveListItems();
+    });
+
+    newElement.appendChild(newDate);
+    newElement.appendChild(newIcon);
+    list.appendChild(newElement);
+  });
 }
