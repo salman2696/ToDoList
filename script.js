@@ -18,15 +18,17 @@ window.onload = function() {
 btnClick.addEventListener("click", addListItem);
 
 document.body.addEventListener("keydown", function (e) {
-  var keyCode = e.keyCode;
-  if (keyCode === 13) {
+  console.log(e)
+  var key = e.key;
+  if (key === "Enter") {
     addListItem();
   }
 });
 
 searchInput.addEventListener("input", filterListItems);
 
-function addListItem() {
+function addListItem(e) {
+  console.log()
   const newElement = document.createElement("li");
   const newDate = document.createElement("p");
   const newIcon = document.createElement("i");
